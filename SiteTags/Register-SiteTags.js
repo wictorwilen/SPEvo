@@ -3,7 +3,7 @@ var web = context.get_web()
 var customActions = web.get_userCustomActions();
 var customAction = customActions.add();
 customAction.set_location('ScriptLink');
-customAction.set_scriptSrc('~SiteCollection/SiteAssets/Wictor.SiteTags.js');
+customAction.set_scriptSrc('~SiteCollection/SiteAssets/SPEvo.SiteTags.js');
 customAction.set_sequence(1100);
 customAction.set_title('SiteTags');
 customAction.set_description('Site Tags');
@@ -41,7 +41,7 @@ var web = context.get_site()
 var customActions = web.get_userCustomActions();
 var customAction = customActions.add();
 customAction.set_location('ScriptLink');
-customAction.set_scriptSrc('~SiteCollection/SiteAssets/Wictor.SiteTags.js');
+customAction.set_scriptSrc('~SiteCollection/SiteAssets/SPEvo.SiteTags.js');
 customAction.set_sequence(1100);
 customAction.set_title('SiteTags');
 customAction.set_description('Site Tags');
