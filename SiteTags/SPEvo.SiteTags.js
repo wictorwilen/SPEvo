@@ -38,25 +38,24 @@ SPEvo.SiteTags = function () {
                     var action = new CalloutAction({
                         text: "Save tags",
                         onClickCallback: function () {
-                            // Set the value
-                            allProperties.set_item('SPEvo_SiteTag1', $get('siteInfoTags1').value)
-                            allProperties.set_item('SPEvo_SiteTag2', $get('siteInfoTags2').value)
-                            allProperties.set_item('SPEvo_SiteTag3', $get('siteInfoTags3').value)
-
-                            // Update vti_indexedpropertykeys
                             var vti_indexedpropertykeys = "";
                             if (typeof allProperties.get_fieldValues()['vti_indexedpropertykeys'] !== 'undefined') {
                                 vti_indexedpropertykeys = allProperties.get_item('vti_indexedpropertykeys')
                             }
-                            var base64 = [// [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("SPEvo_SiteTag1"))
-                                "UwBQAEUAdgBvAF8AUwBpAHQAZQBUAGEAZwAxAA==",
-                                "UwBQAEUAdgBvAF8AUwBpAHQAZQBUAGEAZwAyAA==",
-                                "UwBQAEUAdgBvAF8AUwBpAHQAZQBUAGEAZwAzAA=="
-                            ];
-                            for (var i in base64) {
-                                var b = base64[i]
-                                if (vti_indexedpropertykeys.indexOf(b) == -1) {
-                                    vti_indexedpropertykeys += b + "|"
+                            for (var t in tags) {
+                                var tag = tags[t]
+                                var b64 = SPEvo.SiteTags.base64Encode(tag.property) + "|"
+
+                                // Set the value
+                                var val = $get(tag.input).value
+                                if (val == "" || val == null || typeof val == 'undefined') {
+                                    allProperties.set_item(tag.property, null)
+                                    vti_indexedpropertykeys = vti_indexedpropertykeys.replace(b64, "")
+                                } else {
+                                    allProperties.set_item(tag.property, val)
+                                    if (vti_indexedpropertykeys.indexOf(b64) == -1) {
+                                        vti_indexedpropertykeys += b64
+                                    }
                                 }
                             }
                             allProperties.set_item('vti_indexedpropertykeys', vti_indexedpropertykeys)
@@ -107,33 +106,35 @@ SPEvo.SiteTags = function () {
     },    
     // Callout action
     loadSiteInfo = function () {
+        for (var t in tags) {
+            var tag = tags[t]
+            $get(tag.input).disabled = true
+            $get(tag.input).value = ""
+        }
         SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
-            context = SP.ClientContext.get_current();
-            web = context.get_web();
-            allProperties = web.get_allProperties();
-            permissions = web.doesUserHavePermissions(mask)
-            context.load(web);
-            context.load(allProperties);
+            if (context == null) {
+                context = SP.ClientContext.get_current();
+                web = context.get_web();
+                allProperties = web.get_allProperties();
+                permissions = web.doesUserHavePermissions(mask)
+                context.load(web);
+                context.load(allProperties);
+
+            }
+            
             context.executeQueryAsync(loadSiteInfoSucceeded, loadSiteInfoFailed);
         });
     },
     loadSiteInfoSucceeded = function () {
-        $get('siteInfoTags1').disabled = !permissions.get_value()
-        $get('siteInfoTags2').disabled = !permissions.get_value()
-        $get('siteInfoTags3').disabled = !permissions.get_value()
-        callout.refreshActions()
-
-       if (typeof allProperties.get_fieldValues()['SPEvo_SiteTag1'] !== 'undefined') {
-           $get('siteInfoTags1').value = allProperties.get_item('SPEvo_SiteTag1').replace('\n', ';')
-       }
-       if (typeof allProperties.get_fieldValues()['SPEvo_SiteTag2'] !== 'undefined') {
-           $get('siteInfoTags2').value = allProperties.get_item('SPEvo_SiteTag2').replace('\n', ';')
-       }
-       if (typeof allProperties.get_fieldValues()['SPEvo_SiteTag3'] !== 'undefined') {
-           $get('siteInfoTags3').value = allProperties.get_item('SPEvo_SiteTag3').replace('\n', ';')
-       }
-       
-
+        for (var t in tags) {
+            var tag = tags[t]
+            $get(tag.input).disabled = !permissions.get_value()
+            var val = allProperties.get_fieldValues()[tag.property]
+            if (typeof val !== 'undefined' && val != null) {
+                $get(tag.input).value = val
+            }
+        }
+       callout.refreshActions()
     },
     loadSiteInfoFailed = function () {
         alert('An error is malfunctioning');
@@ -145,9 +146,75 @@ SPEvo.SiteTags = function () {
     callout = null,
     permissions = null,
     mask = null,
+    tags = [
+        {
+            'input': 'siteInfoTags1',
+            'property': 'SPEvo_SiteTag1'
+        },
+        {
+            'input': 'siteInfoTags2',
+            'property': 'SPEvo_SiteTag2'
+        },
+        {
+            'input': 'siteInfoTags3',
+            'property': 'SPEvo_SiteTag3'
+        }
+    ],
+    // http://stackoverflow.com/questions/17913609/javascript-unicode-base64-encode
+    utf16To64 = function (str) {
+        return base16To64(utf16To16(str));
+    },
+    base16To64 = function (arr16) {
+        return base8To64(base16To8(arr16));
+    },
+    base8To64 = function (arr8) {
+        return base6To64(base8To6(arr8));
+    },
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+    base6To64 = function (arr6) {
+        var i, b64 = '';
+        for (i = 0; i < arr6.length; ++i) b64 += chars.charAt(arr6[i]);
+        i = b64.length % 4;
+        b64 += ['', '==', '==', '='][i];
+        return b64;
+    },
+    base16To8 = function (arr16) {
+        var i, arr8 = [];
+        for (i = 0; i < arr16.length; ++i)
+            arr8.push(arr16[i] >>> 8, arr16[i] & 255);
+        return arr8;
+    },
+    base8To6 = function (arr8) {
+        var arr6 = [], i, e1, e2, e3, s1, s2, s3, s4, d1, d2, d3;
+        for (i = 0; i < arr8.length; i += 3) {
+            e1 = (d1 = arr8[i]    ) & 255;
+            e2 = (d2 = arr8[i + 1]) & 255;
+            e3 = (d3 = arr8[i + 2]) & 255;
+            s1 =                     e1 >>> 2 ;
+            s2 = ((e1 &  3) << 4) + (e2 >>> 4);
+            s3 = ((e2 & 15) << 2) + (e3 >>> 6);
+            s4 =   e3 & 63                    ;
+            arr6.push(s1, s2);
+            if (d3 !== undefined)
+                arr6.push(s3, s4);
+            else if (d2 !== undefined)
+                arr6.push(s3);
+        }
+        arr6.byteLength = arr8.length;
+        return arr6;
+    },
+    utf16To16 = function (str) {
+        var arr16 = [], i, c;
+        for (i = 0; i < str.length; ++i) {
+            c = str.charCodeAt(i) & 65535;
+            arr16.push(((c & 255) << 8) + (c >>> 8));
+        }
+        return arr16;
+    },
     multiString = function (f) {
         return f.toString().split('\n').slice(1, -1).join('\n');
     },
+
     html = '<a onclick="return false;" id="site_tags_button" title="" class="ms-promotedActionButton" href="javascript:return false;" style="display:inline-block;"><span style="height:16px;width:16px;position:relative;display:inline-block;overflow:hidden;" class="s4-clust ms-promotedActionButton-icon"><img src="/_layouts/15/images/spcommon.png?rev=38" style="position: absolute; left: -180px; top: -174px;"></span><span class="ms-promotedActionButton-text">Site tags</span></a>',
     panelHtml = multiString(function(){/**
 <div style="display: none">
@@ -165,6 +232,7 @@ SPEvo.SiteTags = function () {
     ;
 
     return {
+        base64Encode: utf16To64,
         init: init
     }
 }();

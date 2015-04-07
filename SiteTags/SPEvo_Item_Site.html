@@ -1,0 +1,78 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"> 
+<head>
+<title>SPEvo Site Item</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:TemplateHidden msdt:dt="string">0</mso:TemplateHidden>
+<mso:MasterPageDescription msdt:dt="string">Displays a result tailored for a SharePoint site.</mso:MasterPageDescription>
+<mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
+<mso:TargetControlType msdt:dt="string">;#SearchResults;#</mso:TargetControlType>
+<mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
+<mso:ManagedPropertyMapping msdt:dt="string">'Title':'Title','Path':'Path','SiteLogo':'SiteLogo','SiteDescription':'SiteDescription','CollapsingStatus':'CollapsingStatus','DocId':'DocId','HitHighlightedProperties':'HitHighlightedProperties','FileExtension':'FileExtension','ViewsLifeTime':'ViewsLifeTime','deeplinks':'deeplinks','importance':'importance','FileType':'FileType','SiteTag':'SiteTag'</mso:ManagedPropertyMapping>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div id="Item_Site">
+        <!--#_
+                if(!$isNull(ctx.CurrentItem) && !$isNull(ctx.ClientControl)){
+                    var id = ctx.ClientControl.get_nextUniqueId();
+                    var itemId = id + Srch.U.Ids.item;
+                    var hoverId = id + Srch.U.Ids.hover;
+                    var hoverUrl = "~sitecollection/_catalogs/masterpage/SPEvo_Item_Site_HoverPanel.js";
+                    var deepLinksClassNoEncode = "ms-srch-item-deepLinks";
+                    $setResultItem(itemId, ctx.CurrentItem);
+                    ctx.currentItem_ShowHoverPanelCallback = Srch.U.getShowHoverPanelCallback(itemId, hoverId, hoverUrl);
+                    ctx.currentItem_HideHoverPanelCallback = Srch.U.getHideHoverPanelCallback();
+        _#-->
+        <div id="_#= $htmlEncode(itemId) =#_" name="Item" data-displaytemplate="SiteItem" class="ms-srch-item" onmouseover="_#= ctx.currentItem_ShowHoverPanelCallback =#_" onmouseout="_#= ctx.currentItem_HideHoverPanelCallback =#_">
+
+            <!--#_
+                            if(!$isNull(ctx.CurrentItem.SiteLogo) && !Srch.U.isDefaultSiteLogo(ctx.CurrentItem.SiteLogo)){
+                                ctx.CurrentItem.csr_PathLength = Srch.U.pathTruncationLengthWithPreview;
+                                ctx.CurrentItem.csr_PreviewImage = ctx.CurrentItem.SiteLogo;
+                                ctx.CurrentItem.csr_PreviewImageAltText = Srch.Res.hp_Alt_SiteLogo;
+                            } else {
+                                deepLinksClassNoEncode += " ms-srch-item-deepLinks-noPreview";
+                            }
+            _#-->
+            _#=ctx.RenderBody(ctx)=#_
+            <!--#_
+                            if(!Srch.U.e(ctx.CurrentItem.deeplinks) && !Srch.U.n(ctx.CurrentItem.importance)){
+            _#-->
+            <div class="_#= deepLinksClassNoEncode =#_" id="_#= $htmlEncode(id + Srch.U.Ids.deepLinks) =#_">
+                _#= Srch.U.getDeepLinks(ctx.CurrentItem.deeplinks, ctx.CurrentItem.importance) =#_
+            </div>
+            <!--#_
+                            }
+            _#-->
+            <div id="_#= $htmlEncode(hoverId) =#_" class="ms-srch-hover-outerContainer"></div>
+
+        </div>
+        <!--#_
+                }
+        _#-->
+        <!--#_
+                if(ctx.CurrentItem.SiteTag != '')
+                {
+                    _#-->
+                    <div>Site tags:
+                    <!--#_
+                    var tags = Srch.U.getArray(ctx.CurrentItem.SiteTag)
+                    for(var i in tags)
+                    {
+                        var tag = tags[i]
+                    _#-->
+                    <span class='ms-ref-name ms-displayInline'>_#= tag =#_</span>
+                    <!--#_
+                    }
+                    _#-->
+                    </div>
+                    <!--#_
+                }
+        _#-->
+
+    </div>
+</body>
+</html>

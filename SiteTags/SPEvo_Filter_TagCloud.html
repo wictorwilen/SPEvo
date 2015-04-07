@@ -90,7 +90,7 @@
                     if(!$isNull(filter)) {
                         var refiners = new Object();
                         refiners[filter.RefinerName] = filter.RefinementTokens;
-                        outputFilter('Remove ' + filter.RefinementName, filter.RefinementCount, refiners, 'removeRefinementFiltersJSON');
+                        outputFilter(filter.RefinementName, filter.RefinementCount, refiners, 'removeRefinementFiltersJSON', false, true);
                     }
                 }
 
@@ -107,7 +107,8 @@
             }
           }
 
-            function outputFilter(refinementName, refinementCount, refiners, method, block) {
+            function outputFilter(refinementName, refinementCount, refiners, method, block, remove) {
+                var bold = remove ? "font-weight:bold;" :""
                 if(block) {
                     _#-->
                         <div>
@@ -120,14 +121,14 @@
                     var size = refinementCount*multiplier + offset;
 
                     _#-->
-        <a id='FilterLink' style="font-size:_#= size =#_%" onclick="_#= onClickEvent =#_" href='javascript:{}' title='_#= $htmlEncode(String.format(Srch.U.loadResource("rf_RefineBy"), refinementName)) =#_'>
+        <a id='FilterLink' style="_#= bold =#_ font-size:_#= size =#_%;white-space:nowrap;" onclick="_#= onClickEvent =#_" href='javascript:{}' title='_#= $htmlEncode(String.format(Srch.U.loadResource("rf_RefineBy"), refinementName)) =#_'>
             <div id='RefinementName' class='ms-ref-name ms-displayInline'> _#= $htmlEncode(refinementName) =#_ </div>
             <div id='RefinementCount' class='ms-ref-count ms-textSmall'> (_#= $htmlEncode(Srch.U.toFormattedNumber(refinementCount)) =#_) </div>
         </a>
         <!--#_
         } else {
         _#-->
-        <a id='FilterLink' class='ms-displayBlock' onclick="_#= onClickEvent =#_" href='javascript:{}' title='_#= $htmlEncode(String.format(Srch.U.loadResource("rf_RefineBy"), refinementName)) =#_'>
+        <a id='FilterLink' style="white-space:nowrap;" class='ms-displayBlock' onclick="_#= onClickEvent =#_" href='javascript:{}' title='_#= $htmlEncode(String.format(Srch.U.loadResource("rf_RefineBy"), refinementName)) =#_'>
             <div id='RefinementName' class='ms-ref-name ms-displayInlineBlock ms-ref-ellipsis'> _#= $htmlEncode(refinementName) =#_ </div>
         </a>
         <!--#_
