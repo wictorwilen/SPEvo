@@ -9,7 +9,7 @@
 <mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
 <mso:TargetControlType msdt:dt="string">;#SearchResults;#</mso:TargetControlType>
 <mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
-<mso:ManagedPropertyMapping msdt:dt="string">'Title':'Title','Path':'Path','SiteLogo':'SiteLogo','SiteDescription':'SiteDescription','CollapsingStatus':'CollapsingStatus','DocId':'DocId','HitHighlightedProperties':'HitHighlightedProperties','FileExtension':'FileExtension','ViewsLifeTime':'ViewsLifeTime','deeplinks':'deeplinks','importance':'importance','FileType':'FileType','SiteTag':'SiteTag'</mso:ManagedPropertyMapping>
+<mso:ManagedPropertyMapping msdt:dt="string">'Title':'Title','Path':'Path','SiteLogo':'SiteLogo','SiteDescription':'SiteDescription','CollapsingStatus':'CollapsingStatus','DocId':'DocId','HitHighlightedProperties':'HitHighlightedProperties','FileExtension':'FileExtension','ViewsLifeTime':'ViewsLifeTime','deeplinks':'deeplinks','importance':'importance','FileType':'FileType','SiteTag':'SiteTag','ViewsRecent':'ViewsRecent'</mso:ManagedPropertyMapping>
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
@@ -26,7 +26,8 @@
                     ctx.currentItem_ShowHoverPanelCallback = Srch.U.getShowHoverPanelCallback(itemId, hoverId, hoverUrl);
                     ctx.currentItem_HideHoverPanelCallback = Srch.U.getHideHoverPanelCallback();
         _#-->
-        <div id="_#= $htmlEncode(itemId) =#_" name="Item" data-displaytemplate="SiteItem" class="ms-srch-item" onmouseover="_#= ctx.currentItem_ShowHoverPanelCallback =#_" onmouseout="_#= ctx.currentItem_HideHoverPanelCallback =#_">
+        <div id="_#= $htmlEncode(itemId) =#_" name="Item" data-displaytemplate="SiteItem" 
+             class="ms-srch-item" onmouseover="_#= ctx.currentItem_ShowHoverPanelCallback =#_" onmouseout="_#= ctx.currentItem_HideHoverPanelCallback =#_">
 
             <!--#_
                             if(!$isNull(ctx.CurrentItem.SiteLogo) && !Srch.U.isDefaultSiteLogo(ctx.CurrentItem.SiteLogo)){
@@ -57,19 +58,21 @@
                 if(ctx.CurrentItem.SiteTag != '')
                 {
                     _#-->
-                    <div>Site tags:
-                    <!--#_
-                    var tags = Srch.U.getArray(ctx.CurrentItem.SiteTag)
-                    for(var i in tags)
-                    {
-                        var tag = tags[i]
-                    _#-->
-                    <span class='ms-ref-name ms-displayInline'>_#= tag =#_</span>
-                    <!--#_
-                    }
-                    _#-->
-                    </div>
-                    <!--#_
+        <div>
+            <b>Site tags:</b>
+            <!--#_
+            var tags = Srch.U.getArray(ctx.CurrentItem.SiteTag)
+            for(var i in tags)
+            {
+                var tag = tags[i]
+            _#-->
+            <span style="height:16px;width:16px;position:relative;display:inline-block;overflow:hidden;margin-right:0" class="s4-clust ms-promotedActionButton-icon"><img src="/_layouts/15/images/spcommon.png?rev=38" style="position: absolute; left: -180px; top: -174px;"></span>
+            <span class='ms-ref-name ms-displayInline'>_#= tag =#_</span>
+            <!--#_
+            }
+            _#-->
+        </div>
+        <!--#_
                 }
         _#-->
 

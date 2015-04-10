@@ -23,6 +23,7 @@ SPEvo.SiteTags = function () {
                 options.launchPoint = launchPoint;
                 options.contentElement = $get('siteInfoPanel');
                 options.ID = 'siteInfoCallout';
+                
                 options.title = 'Site Tags';
                 options.onOpenedCallback = loadSiteInfo;
 
