@@ -1,0 +1,93 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"> 
+<head>
+<title>SPEvo Best Bet Item</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:TemplateHidden msdt:dt="string">0</mso:TemplateHidden>
+<mso:MasterPageDescription msdt:dt="string">Displays a single Best Bet or Promoted result.</mso:MasterPageDescription>
+<mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
+<mso:TargetControlType msdt:dt="string">;#SearchResults;#</mso:TargetControlType>
+<mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
+<mso:HtmlDesignConversionSucceeded msdt:dt="string">True</mso:HtmlDesignConversionSucceeded>
+<mso:HtmlDesignStatusAndPreview msdt:dt="string">https://spevo04.sharepoint.com/search/_catalogs/masterpage/Display Templates/Search/Item_BestBet.html, Conversion successful.</mso:HtmlDesignStatusAndPreview>
+<mso:CrawlerXSLFile msdt:dt="string"></mso:CrawlerXSLFile>
+<mso:HtmlDesignPreviewUrl msdt:dt="string"></mso:HtmlDesignPreviewUrl>
+<mso:ManagedPropertyMapping msdt:dt="string"></mso:ManagedPropertyMapping>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div id="Item_BestBet">
+<!--#_  
+    if(!$isNull(ctx.CurrentItem) && !$isNull(ctx.ClientControl))
+    {
+        var id = ctx.ClientControl.get_nextUniqueId();
+		var itemId = id + Srch.U.Ids.item;
+		$setResultItem(itemId, ctx.CurrentItem);
+        var title = null;      
+        if (!$isEmptyString(ctx.CurrentItem.Title)) title = $htmlEncode(Srch.U.truncateEnd(ctx.CurrentItem.Title, Srch.U.titleTruncationLength));
+
+        var url = null;        
+        if (!$isEmptyString(ctx.CurrentItem.Url)) url = $htmlEncode(Srch.U.truncateUrl(ctx.CurrentItem.Url, Srch.U.pathTruncationLength));
+
+        var isVBB = ctx.CurrentItem.IsVisualBestBet;
+        var url = ctx.CurrentItem.Url;
+        url = url.replace('{SearchTerms}',ctx.CurrentItem.ParentTableReference.Properties.QueryModification);
+_#-->
+        <div id="_#= $htmlEncode(itemId) =#_" name="Item" class="ms-srch-bestBetItem">
+            <div id="_#= $htmlEncode(id + Srch.U.Ids.body) =#_" class="ms-srch-item-body">
+<!--#_ 
+            if (isVBB) { 
+                if (!$isNull(url)) {
+_#-->
+                <iframe id="_#= $htmlEncode(id + Srch.U.Ids.visualBestBet) =#_" class="ms-srch-item-visualBestBet" title="_#= $htmlEncode(ctx.CurrentItem.Title) =#_" scrolling="no" frameborder="0px" src="_#= $urlHtmlEncodeString(url) =#_"></iframe>
+<!--#_ 
+                }            
+            } else {                 
+_#-->
+                <div class="ms-srch-bestBetItem-icon">
+                    <img id="_#= $htmlEncode(id + Srch.U.Ids.icon) =#_" src="_#= $urlHtmlEncodeString(GetThemedImageUrl('searchresultui.png')) =#_" />
+                </div>
+<!--#_
+                if (!$isNull(title)) {
+_#-->                
+                    <div id="_#= $htmlEncode(id + Srch.U.Ids.title) =#_" class="ms-srch-item-title">
+                        <h3 class="ms-srch-ellipsis">
+<!--#_                 
+                        if ($isNull(url)) {
+_#-->
+                            _#= title =#_
+<!--#_                 
+                        } else {
+_#-->
+                            <a clicktype="Result" id="_#= $htmlEncode(id + Srch.U.Ids.titleLink) =#_" href="_#= $urlHtmlEncodeString(ctx.CurrentItem.Url) =#_" class="ms-srch-item-link" title="_#= $htmlEncode(ctx.CurrentItem.Title) =#_">_#= title =#_</a>
+<!--#_                 
+                        }
+_#-->
+                        </h3>
+                    </div>
+<!--#_ 
+                }
+                if (!$isEmptyString(ctx.CurrentItem.Description)) {
+_#-->
+                    <div id="_#= $htmlEncode(id + Srch.U.Ids.summary) =#_" class="ms-srch-item-summary">_#= $htmlEncode(Srch.U.truncateEnd(ctx.CurrentItem.Description, Srch.U.summaryTruncationLength)) =#_</div>
+<!--#_ 
+                }
+                if (!$isNull(url)) {
+_#-->
+			        <div id="_#= $htmlEncode(id + Srch.U.Ids.path) =#_" tabindex="0" class="ms-srch-item-path" title="_#= $htmlEncode(ctx.CurrentItem.Url) =#_" onblur="Srch.U.restorePath(this, '_#= $scriptEncode(url) =#_', '_#= $scriptEncode(ctx.CurrentItem.Url) =#_')" onclick="Srch.U.selectPath('_#= $scriptEncode(ctx.CurrentItem.Url) =#_', this)" onkeydown="Srch.U.setPath(event, this, '_#= $scriptEncode(ctx.CurrentItem.Url) =#_', '_#= $scriptEncode(url) =#_')" >
+				        _#= url =#_
+			        </div>                    
+<!--#_ 
+                }
+            } 
+_#-->
+            </div>
+        </div>
+<!--#_ 
+    } 
+_#-->
+    </div>
+</body>
+</html>
