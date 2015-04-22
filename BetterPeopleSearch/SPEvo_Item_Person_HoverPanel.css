@@ -1,0 +1,72 @@
+
+.peopleList li {
+    height: 41px;
+}
+
+.peopleList img {
+    width: 36px;
+    height: 36px;
+    float: left;
+    margin-right: 5px;
+}
+
+.documentsList li {
+	border: 1px solid #eee;
+	float: left;
+	margin: 0 0.8em 0 0;
+	width: 140px;
+}
+
+.documentsList li a {
+	text-decoration: none;
+	color: #000;
+}
+
+.documentsList li a img {
+    border: 0;
+}
+
+.documentsList .thumbnail {
+	height: 78px;
+	overflow: hidden;
+    background-color: rgba(0, 158, 73, 0.701961);
+}
+
+.documentsList .thumbnail img {
+	width: 100%;
+}
+
+.documentsList .docinfo {
+	position: relative;
+	top: -20px;
+	left: 5px;
+}
+
+.documentsList .userphoto {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	float: left;
+	margin-right: 5px;
+}
+
+.documentsList .username {
+	display: block;
+	padding-top: 24px;
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.documentsList .modifiedDate {
+	display: block;
+	font-size: 0.8em;
+}
+
+.documentsList .title {
+	font-size: 1.3em;
+	line-height: 1.2;
+	margin-top: -0.4em;
+	padding: 0 0.5em 0.5em 0.5em;
+}

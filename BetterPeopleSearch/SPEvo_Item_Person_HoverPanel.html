@@ -1,0 +1,440 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"> 
+<head>
+<title>SPEvo People Hover Panel</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:TemplateHidden msdt:dt="string">0</mso:TemplateHidden>
+<mso:MasterPageDescription msdt:dt="string">Displays a result hover panel tailored for a person.</mso:MasterPageDescription>
+<mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
+<mso:TargetControlType msdt:dt="string">;#SearchHoverPanel;#</mso:TargetControlType>
+<mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
+<mso:CrawlerXSLFile msdt:dt="string"></mso:CrawlerXSLFile>
+<mso:ManagedPropertyMapping msdt:dt="string">'AboutMe':'AboutMe','AccountName':'AccountName','BaseOfficeLocation':'BaseOfficeLocation','Department':'Department','HitHighlightedProperties':'HitHighlightedProperties','Interests':'Interests','JobTitle':'JobTitle','LastModifiedTime':'LastModifiedTime','Memberships':'Memberships','PastProjects':'PastProjects','Path':'Path','PictureURL':'PictureURL','PreferredName':'PreferredName','Responsibilities':'Responsibilities','Schools':'Schools','ServiceApplicationID':'ServiceApplicationID','SipAddress':'SipAddress','Skills':'Skills','UserProfile_GUID':'UserProfile_GUID','WorkEmail':'WorkEmail','WorkId':'WorkId','WorkPhone':'WorkPhone','YomiDisplayName':'YomiDisplayName'</mso:ManagedPropertyMapping>
+<mso:HtmlDesignStatusAndPreview msdt:dt="string">https://spevo04.sharepoint.com/search/_catalogs/masterpage/SPEvo_Item_Person_HoverPanel.html, Conversion successful.</mso:HtmlDesignStatusAndPreview>
+<mso:HtmlDesignConversionSucceeded msdt:dt="string">True</mso:HtmlDesignConversionSucceeded>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div id="Item_Person_HoverPanel">
+<!--#_
+        if(!$isNull(ctx.CurrentItem)){
+            var id = ctx.CurrentItem.id;
+            var encodedId = $htmlEncode(ctx.CurrentItem.csr_id);
+            var followId = encodedId + "_hoverFollow";
+            var dynTagId = encodedId + "_hoverDynTag";
+            var dynTagIdRel = encodedId + "_hoverDynTagRel";
+            var visitId = encodedId + "_hoverVisit";
+            var hhProps = Srch.U.createXMLDocument("<root>" + ctx.CurrentItem.HitHighlightedProperties + "</root>");
+            var has_acc = !$isEmptyString(ctx.CurrentItem.AccountName); 
+            var has_abme = !$isEmptyString(ctx.CurrentItem.AboutMe);
+            var has_resp = !$isEmptyString(ctx.CurrentItem.Responsibilities);
+            var has_ski = !$isEmptyString(ctx.CurrentItem.Skills);
+            var has_pp = !$isEmptyString(ctx.CurrentItem.PastProjects);
+            var has_sch = !$isEmptyString(ctx.CurrentItem.Schools);
+            var has_memb = !$isEmptyString(ctx.CurrentItem.Memberships);
+            var has_int = !$isEmptyString(ctx.CurrentItem.Interests);
+            var has_phone = !$isEmptyString(ctx.CurrentItem.WorkPhone);
+            var has_vlm = !$isEmptyString(ctx.CurrentItem.ProfileViewsLastMonth);
+            var has_vlw = !$isEmptyString(ctx.CurrentItem.ProfileViewsLastWeek);
+            var has_query = !$isEmptyString(ctx.CurrentItem.ProfileQueriesFoundYou); 
+            var isSelfSrch = (has_vlm == true || has_vlw == true || has_query == true);
+            var infoAvailable = false;
+            var delimiter = "";
+            var uname = ctx.CurrentItem.PreferredName;
+            var aname = ctx.CurrentItem.AccountName;
+            var isExpResult = false;
+            if (!$isNull(ctx.CurrentItem.ParentTableReference) && !$isNull(ctx.CurrentItem.ParentTableReference.QueryRuleId))
+            {
+              var orQRId  = new SP.Guid(ctx.CurrentItem.ParentTableReference.QueryRuleId);
+              var exQRId = new SP.Guid("915bafaa-12da-492c-89b3-516f811dbf8c");
+              if (!$isNull(orQRId) && !$isNull(exQRId) && orQRId.equals(exQRId))
+              {
+                isExpResult =  true;
+              }
+            }
+            if ($isEmptyString(uname)) { uname = ctx.CurrentItem.YomiDisplayName }
+_#-->
+            <div class="ms-srch-hover-innerContainer ms-srch-hover-standardSize" id="_#= $htmlEncode(id + HP.ids.inner) =#_">
+                <div class="ms-srch-hover-arrowBorder" id="_#= $htmlEncode(id + HP.ids.arrowBorder) =#_"></div>
+                <div class="ms-srch-hover-arrow" id="_#= $htmlEncode(id + HP.ids.arrow) =#_"></div>
+                <div class="ms-srch-hover-content" id="_#= $htmlEncode(id + HP.ids.content) =#_" data-displaytemplate="PeopleHoverPanel">
+                    <div id="_#= $htmlEncode(id + HP.ids.header) =#_" class="ms-srch-hover-header">
+                        <div class="ms-srch-hover-close">
+                            <a href="javascript:HP.Close()" id="_#= $htmlEncode(id + HP.ids.close) =#_" title="_#= $htmlEncode(Srch.Res.hp_Tooltip_Close) =#_">
+                                <img src="_#= $urlHtmlEncodeString(SP.Utilities.VersionUtility.getImageUrl(Srch.SU.closeImage)) =#_" alt="_#= $htmlEncode(Srch.Res.hp_Tooltip_Close) =#_" />
+                            </a>
+                        </div>
+                        <div class="ms-srch-hover-title">
+<!--#_                        
+                            if (!Srch.U.e(uname) && !Srch.U.e(ctx.CurrentItem.Path)) {
+                                var encodedName = $htmlEncode(uname);
+                                var displayName = Srch.U.getSingleHHXMLNodeValue(hhProps, "preferredname");
+                                if ($isEmptyString(displayName)) { displayName = encodedName }
+_#-->                        
+                                <h2 class="ms-dlg-heading ms-srch-ellipsis">_#= displayName =#_</h2>
+<!--#_                        
+                            }
+_#--> 
+                        </div>
+                    </div>
+                    <div id="_#= $htmlEncode(id + HP.ids.body) =#_" class="ms-srch-hover-body ms-srch-people-hover-categories">
+                        <ul id="Categories">
+                            <li id="OGColleagues">
+                                <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= ctx.CurrentItem.PreferredName =#_'s colleagues</h3></div>
+                                <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + 'colleagues') =#_">
+                                    <img src="../_layouts/15/images/loadingcirclests16.gif" alt="Loading...">
+                                </div>
+                            </li>
+                            <li id="OGDocuments">
+                                <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">Trending around _#= ctx.CurrentItem.PreferredName =#_</h3></div>
+                                <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + 'trendingdocs') =#_">
+                                    <img src="../_layouts/15/images/loadingcirclests16.gif" alt="Loading...">
+                                </div>
+                            </li>
+<!--#_                    
+                            if(isExpResult == true) {
+_#-->                        
+                              <div id="_#= dynTagId =#_"></div>
+<!--#_                                                                            
+                            }                
+_#-->   
+<!--#_                    
+                            if(has_ski == true && has_resp == true && has_abme == true) {
+                                var encodedVal = Srch.U.getTrimmedProcessedHHXMLString(Srch.U.getMultipleHHXMLNodeValues(hhProps, "skills", 5, delimiter), 145);
+                                if (Srch.U.e(encodedVal)) { encodedVal = $htmlEncode(Srch.U.getTrimmedString(Srch.U.getUnEncodedMultiValuedResults(ctx.CurrentItem.Skills, 5, delimiter), 145)) }
+                                if (!Srch.U.e(encodedVal)) {
+                                    infoAvailable = true;
+_#-->                        
+                                    <li id="SkillsField">
+                                        <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= $htmlEncode(Srch.Res.hp_PeopleItem_Skills) =#_</h3></div>
+                                        <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + HP.ids.peopleSkills) =#_">
+                                            _#= encodedVal =#_
+                                        </div>
+                                    </li>
+<!--#_ 
+                                } 
+_#-->
+<!--#_                                                                            
+                            }                
+_#-->                                
+<!--#_                    
+                            if(has_pp == true && (has_resp == true  || has_ski == true) && (has_abme == true || (has_resp == true && has_ski == true))) {
+                                var encodedVal = Srch.U.getTrimmedProcessedHHXMLString(Srch.U.getMultipleHHXMLNodeValues(hhProps, "pastprojects", 5, delimiter), 145);
+                                if (Srch.U.e(encodedVal)) { encodedVal = $htmlEncode(Srch.U.getTrimmedString(Srch.U.getUnEncodedMultiValuedResults(ctx.CurrentItem.PastProjects, 5, delimiter), 145)) }
+                                if (!Srch.U.e(encodedVal)) {
+                                    infoAvailable = true;
+_#-->                        
+                                    <li id="PastProjectsField">
+                                        <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= $htmlEncode(Srch.Res.hp_PeopleItem_PastProjects) =#_</h3></div>
+                                        <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + HP.ids.peoplePastProjects) =#_">
+                                            _#= encodedVal =#_
+                                        </div>
+                                    </li>
+<!--#_ 
+                                } 
+_#-->
+<!--#_                                                                            
+                            }                
+_#-->                                                        
+<!--#_                    
+                            if(has_int == true && (has_resp == true  || has_ski == true || has_pp == true) && (has_abme == true || (has_resp == true && (has_ski == true || has_pp == true)) || (has_ski == true && has_pp == true))) {
+                                var encodedVal = Srch.U.getTrimmedProcessedHHXMLString(Srch.U.getMultipleHHXMLNodeValues(hhProps, "interests", 5, delimiter), 145);
+                                if (Srch.U.e(encodedVal)) { encodedVal = $htmlEncode(Srch.U.getTrimmedString(Srch.U.getUnEncodedMultiValuedResults(ctx.CurrentItem.Interests, 5, delimiter), 145)) }
+                                if (!Srch.U.e(encodedVal)) {
+                                    infoAvailable = true;
+_#-->                        
+                                    <li id="InterestsField">
+
+                                        <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= $htmlEncode(Srch.Res.hp_PeopleItem_Interests) =#_</h3></div>
+                                        <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + HP.ids.peopleInterests) =#_">
+                                            _#= encodedVal =#_
+                                        </div>
+                                    </li>
+<!--#_ 
+                                } 
+_#-->
+<!--#_                                                                            
+                            }                
+_#-->                        
+<!--#_                    
+                            if(has_sch == true && (has_resp == true  || has_ski == true || has_pp == true || has_int == true)) {
+                                var encodedVal = Srch.U.getTrimmedProcessedHHXMLString(Srch.U.getMultipleHHXMLNodeValues(hhProps, "schools", 5, delimiter), 145);
+                                if (Srch.U.e(encodedVal)) { encodedVal = $htmlEncode(Srch.U.getTrimmedString(Srch.U.getUnEncodedMultiValuedResults(ctx.CurrentItem.Schools, 5, delimiter), 145)) }
+                                if (!Srch.U.e(encodedVal)) {
+                                    infoAvailable = true;
+_#-->                        
+                                    <li id="SchoolsField">
+                                        <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= $htmlEncode(Srch.Res.hp_PeopleItem_Schools) =#_</h3></div>
+                                        <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + HP.ids.peopleSchools) =#_">
+                                            _#= encodedVal =#_
+                                        </div>
+                                    </li>
+<!--#_ 
+                                } 
+_#-->
+<!--#_                                                                            
+                            }                
+_#-->                          
+<!--#_                    
+                            infoAvailable = true;
+                            if(isExpResult == false) {
+_#-->                        
+                              <div id="_#= dynTagId =#_"></div>
+<!--#_                                                                            
+                            }                
+_#-->   
+                            <div id="_#= dynTagIdRel =#_"></div>
+                        </ul>
+                    </div>
+                    <div id="_#= $htmlEncode(id + HP.ids.actions) =#_" class="ms-srch-hover-actions">
+                        <div class="ms-srch-hover-action">
+                            <a class="ms-calloutLink ms-uppercase" href="sip:_#= $urlHtmlEncodeString(ctx.CurrentItem.SipAddress) =#_">
+                                IM 
+                            </a>
+                        </div>
+<!--#_
+                    if (has_phone) {
+_#-->
+                        <div class="ms-srch-hover-action">
+                            <a class="ms-calloutLink ms-uppercase" href="tel:_#= $urlHtmlEncodeString(ctx.CurrentItem.WorkPhone) =#_">
+                                Call
+                            </a>
+                        </div>
+<!--#_
+                    }
+_#-->
+                        <div class="ms-srch-hover-action">
+                            <a class="ms-calloutLink ms-uppercase" href="mailto:_#= $urlHtmlEncodeString(ctx.CurrentItem.SipAddress) =#_">
+                                E-mail 
+                            </a>
+                        </div>
+                    </div>
+<!--#_
+/*
+                    AddPostRenderCallback(ctx, function(){
+                        var docCtrlElem = document.getElementById(dynTagId);
+                        Srch.PSU.documentsByQuery(ctx.ClientControl, uname, docCtrlElem, infoAvailable, isExpResult);
+                    });
+*/
+_#-->
+<!--#_
+                    var queryUserId = null;  
+                    if(ctx.ScriptApplicationManager && ctx.ScriptApplicationManager.states){
+                         queryUserId = ctx.ScriptApplicationManager.states.currentUserProfileId;
+					}
+                    var userId = ctx.CurrentItem.UserProfile_GUID;
+
+                    AddPostRenderCallback(ctx, function(){
+                        Srch.PSU.relatedThroughByQuery(ctx.ClientControl, userId, queryUserId, dynTagIdRel, infoAvailable);
+                    });
+
+function loadScript(url, callback) {
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+
+    if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+            if (script.readyState == "loaded" || script.readyState == "complete") {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else { //Others
+        script.onload = function () {
+            callback();
+        };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+if (!window.spevo_item_hoverpanel_cssregistered) {
+    var css = document.createElement('link');
+    css.setAttribute('rel', 'stylesheet');
+    css.setAttribute('href', '../Style%20Library/SPEvo_Item_Person_HoverPanel.css?r=2');
+    css.setAttribute('type', 'text/css');
+    document.head.appendChild(css);
+    window.spevo_item_hoverpanel_cssregistered = true;
+}
+
+function getValueFromResults(key, results) {
+    var value = '';
+
+    if (results != null &&
+        results.length > 0 &&
+        key != null) {
+        for (var i = 0; i < results.length; i++) {
+            var resultItem = results[i];
+
+            if (resultItem.Key === key) {
+                value = resultItem.Value;
+                break;
+            }
+        }
+    }
+
+    return value;
+}
+
+function getPreviewImageUrl(result) {
+    var uniqueID = getValueFromResults('uniqueID', result);
+    var siteId = getValueFromResults('siteID', result);
+    var webId = getValueFromResults('webID', result);
+    var docId = getValueFromResults('DocId', result);
+
+    if (uniqueID !== null && siteId !== null && webId !== null && docId !== null) {
+        return '../_layouts/15/getpreview.ashx?guidFile=' + uniqueID + '&guidSite=' + siteId + '&guidWeb=' + webId + '&docid=' + docId + '&metadatatoken=300x424x2&ClientType=SPEvo&size=small';
+    }
+    else {
+        return "";
+    }
+}
+
+function getUserPhotoUrl(userEmail) {
+    return "../_layouts/15/userphoto.aspx?size=S&accountname=" + userEmail;
+}
+
+function trim(s) {
+    if (s != null && s.length > 0) {
+        return s.replace(/^\s+|\s+$/gm, '');
+    }
+    else {
+        return s;
+    }
+}
+
+var logLevel = 'debug';
+function log(msg, level) {
+    if (level === logLevel) {
+        console.log(msg);
+    }
+    else if (level === 'error') {
+        console.error(msg);
+    }
+}
+
+AddPostRenderCallback(ctx, function() {
+    if (typeof(jQuery) === 'undefined') {
+        log('jQuery not found. Loading...', 'debug');
+
+        loadScript('https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function() {
+            log('jQuery loaded. Proceeding', 'debug');
+            renderPersonsColleagues(ctx.CurrentItem.DocId, id + 'colleagues');
+            renderDocumentsTrendingAroundPerson(ctx.CurrentItem.DocId, id + 'trendingdocs');
+        });
+    }
+    else {
+        log('jQuery already loaded. Proceeding.', 'debug');
+        renderPersonsColleagues(ctx.CurrentItem.DocId, id + 'colleagues');
+        renderDocumentsTrendingAroundPerson(ctx.CurrentItem.DocId, id + 'trendingdocs');
+    }
+});
+
+function renderPersonsColleagues(actorId, containerId) {
+    var ctx = SP.ClientContext.get_current();
+    var query = "/_api/search/query?QueryText='*'&Properties='TitleBasedSummaries:true,GraphQuery:actor(" + actorId + "\\,action\\:1033)'&SelectProperties='AccountName,Department,DocId,JobTitle,OfficeGraphEnabled,OfficeNumber,PreferredName,SipAddress,UserName,UserProfile_GUID,WorkPhone'&RowLimit=2&StartRow=0&ClientType='SPEvo'&BypassResultTypes=true&RankingModelId='0c77ded8-c3ef-466d-929d-905670ea1d72'"
+    $.ajax({
+        url: ctx.get_url() + query,
+        method: 'GET',
+        headers: { 'Accept': 'application/json;odata=nometadata' }
+    }).success(function(data) {
+        if (data &&
+            data.PrimaryQueryResult &&
+            data.PrimaryQueryResult.RelevantResults &&
+            data.PrimaryQueryResult.RelevantResults.RowCount > 0) {
+            var colleagues = [];
+
+            data.PrimaryQueryResult.RelevantResults.Table.Rows.forEach(function(row) {
+                var cells = row.Cells;
+                colleagues.push({
+                    name: getValueFromResults('PreferredName', cells),
+                    email: getValueFromResults('SipAddress', cells),
+                    title: getValueFromResults('JobTitle', cells)
+                });
+            });
+
+            var colleaguesHtml = ['<ul class="peopleList">'];
+
+            colleagues.forEach(function(colleague) {
+                colleaguesHtml.push('<li>');
+                colleaguesHtml.push('<img src="/_layouts/15/userphoto.aspx?size=S&accountname=' + colleague.email + '">');
+                colleaguesHtml.push('<div class="name">' + colleague.name + '</div>');
+                colleaguesHtml.push('<div class="title">' + (colleague.title || '') + '</div>');
+                colleaguesHtml.push('</li>');
+            });
+
+            colleaguesHtml.push('</ul>');
+            $('#' + containerId).html(colleaguesHtml.join(''));
+        }
+    });
+}
+
+function renderDocumentsTrendingAroundPerson(actorId, containerId) {
+    var ctx = SP.ClientContext.get_current();
+    var query = "/_api/search/query?QueryText='(*) AND (FileExtension:doc OR FileExtension:docx OR FileExtension:ppt OR FileExtension:pptx OR FileExtension:xls OR FileExtension:xlsx OR FileExtension:pdf)'&Properties='TitleBasedSummaries:true,GraphQuery:actor(" + actorId + "\\,action\\:1020)'&SelectProperties='Author,AuthorOwsUser,DocId,DocumentPreviewMetadata,Edges,EditorOwsUser,FileExtension,FileType,HitHighlightedProperties,HitHighlightedSummary,LastModifiedTime,LikeCountLifetime,ListID,ListItemID,OriginalPath,Path,Rank,SPWebUrl,SecondaryFileExtension,ServerRedirectedURL,SiteTitle,Title,ViewCountLifetime,siteID,uniqueID,webID'&RowLimit=2&StartRow=0&ClientType='SPEvo'&BypassResultTypes=true&RankingModelId='0c77ded8-c3ef-466d-929d-905670ea1d72'"
+    $.ajax({
+        url: ctx.get_url() + query,
+        method: 'GET',
+        headers: { 'Accept': 'application/json;odata=nometadata' }
+    }).success(function(data) {
+        if (data &&
+            data.PrimaryQueryResult &&
+            data.PrimaryQueryResult.RelevantResults &&
+            data.PrimaryQueryResult.RelevantResults.RowCount > 0) {
+            var documents = [];
+
+            data.PrimaryQueryResult.RelevantResults.Table.Rows.forEach(function(row) {
+                var cells = row.Cells;
+                var editorInfo = getValueFromResults('EditorOwsUser', cells).split('|');
+                var modifiedDate = new Date(getValueFromResults('LastModifiedTime', cells).replace('.0000000', ''));
+                var dateString = (modifiedDate.getMonth()+1) + '/' + modifiedDate.getDate() + '/' + modifiedDate.getFullYear();
+
+                documents.push({
+                    url: getValueFromResults('ServerRedirectedURL', cells),
+                    title: getValueFromResults('Title', cells),
+                    previewImageUrl: getPreviewImageUrl(cells),
+                    fileType: getValueFromResults('FileType', cells),
+                    lastModifiedTime: dateString,
+                    lastModifiedByName: trim(editorInfo[1]),
+                    lastModifiedByPhotoUrl: getUserPhotoUrl(trim(editorInfo[0]))
+                });
+            });
+
+            var documentsHtml = ['<ul class="documentsList">'];
+
+            documents.forEach(function(document) {
+                documentsHtml.push('<li>');
+                documentsHtml.push('<a href="' + document.url + '" target="_blank">');
+                documentsHtml.push('<div class="thumbnail">');
+                if (document.fileType.indexOf('xls') < 0) {
+                    documentsHtml.push('<img src="' + document.previewImageUrl + '" title="' +  document.title + ' preview" />');
+                }
+                documentsHtml.push('</div>');
+                documentsHtml.push('<div class="docinfo">');
+                documentsHtml.push('<img src="' + document.lastModifiedByPhotoUrl + '" alt="' + document.lastModifiedByName + '\'s photo" class="userphoto">');
+                documentsHtml.push('<span class="username" title="' + document.lastModifiedByName +'">' + document.lastModifiedByName + '</span>');
+                documentsHtml.push('<span class="modifiedDate">' + document.lastModifiedTime + '</span>');
+                documentsHtml.push('</div>');
+                documentsHtml.push('<div class="title">' + document.title + '</div>');
+                documentsHtml.push('</a>');
+                documentsHtml.push('</li>');
+            });
+
+            documentsHtml.push('</ul>');
+            $('#' + containerId).html(documentsHtml.join(''));
+        }
+    });
+}
+_#-->
+
+                </div>
+            </div>
+<!--#_                        
+        }
+_#-->            
+    </div>
+</body>
+</html>

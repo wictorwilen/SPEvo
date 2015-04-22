@@ -1,0 +1,31 @@
+.ui-autocomplete {
+    font-family: "Segoe UI" !important;
+    top: 127px !important;
+    width: 243px !important;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    background-color: #eee;
+    margin: 0.25em 0;
+    padding: 0.1em 0.25em;
+}
+
+.ui-autocomplete-category:first-child {
+    margin-top: 0;
+}
+
+.ui-autocomplete-item {
+    min-height: 38px !important;
+}
+
+.ui-autocomplete-item img {
+    float: left;
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+    margin-top: 2px;
+}

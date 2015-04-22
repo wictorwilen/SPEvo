@@ -1,0 +1,478 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"> 
+<head>
+<title>SPEvo Site Hover Panel</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:TemplateHidden msdt:dt="string">0</mso:TemplateHidden>
+<mso:MasterPageDescription msdt:dt="string">Displays a result hover panel tailored for a SharePoint site.</mso:MasterPageDescription>
+<mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
+<mso:TargetControlType msdt:dt="string">;#SearchHoverPanel;#</mso:TargetControlType>
+<mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
+<mso:ManagedPropertyMapping msdt:dt="string">'Title':'Title','Path':'Path','SiteLogo':'SiteLogo','SiteDescription':'SiteDescription','CollapsingStatus':'CollapsingStatus','DocId':'DocId','HitHighlightedProperties':'HitHighlightedProperties','FileExtension':'FileExtension','ViewsLifeTime':'ViewsLifeTime','deeplinks':'deeplinks','importance':'importance','FileType':'FileType'</mso:ManagedPropertyMapping>
+<mso:HtmlDesignStatusAndPreview msdt:dt="string">https://spevo04.sharepoint.com/search/_catalogs/masterpage/SPEvo_Item_Site_HoverPanel.html, Conversion successful.</mso:HtmlDesignStatusAndPreview>
+<mso:HtmlDesignConversionSucceeded msdt:dt="string">True</mso:HtmlDesignConversionSucceeded>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div id="Item_Site_HoverPanel">
+<!--#_
+		var i = 0;
+		var id = ctx.CurrentItem.csr_id;
+        var loadSiteFrame = false;        
+        ctx.CurrentItem.csr_ShowFollowLink = true;
+        ctx.CurrentItem.csr_IsSite = true;
+        ctx.CurrentItem.csr_ShowViewLibrary = false;
+        ctx.CurrentItem.csr_ShowLastModifiedTime = false;
+        ctx.CurrentItem.csr_ShowAuthors = false;
+_#-->
+		<div class="ms-srch-hover-innerContainer ms-srch-hover-standardSize" id="_#= $htmlEncode(id + HP.ids.inner) =#_">
+			<div class="ms-srch-hover-arrowBorder" id="_#= $htmlEncode(id + HP.ids.arrowBorder) =#_"></div>
+			<div class="ms-srch-hover-arrow" id="_#= $htmlEncode(id + HP.ids.arrow) =#_"></div>
+			<div class="ms-srch-hover-content" id="_#= $htmlEncode(id + HP.ids.content) =#_" data-displaytemplate="SiteHoverPanel">
+                <div id="_#= $htmlEncode(id + HP.ids.header) =#_" class="ms-srch-hover-header">
+					_#= ctx.RenderHeader(ctx) =#_
+				</div>
+                <div id="_#= $htmlEncode(id + HP.ids.body) =#_" class="ms-srch-hover-body">
+<!--#_
+                    if(!Srch.U.w(ctx.CurrentItem.csr_Path) && Srch.U.isSameHost(ctx.CurrentItem.csr_Path, Srch.U.getHostName())) {
+                        ctx.CurrentItem.csr_DataShown = true;
+                        loadSiteFrame = true;
+                        var idViewerEncoded = $htmlEncode(id + HP.ids.viewer);
+                        var idGlassViewerEncoded = "glass_" + idViewerEncoded;
+_#-->				    
+                        <div class="ms-srch-hover-viewerContainer ms-srch-hover-siteViewerContainer">
+                            <div id="_#= idGlassViewerEncoded =#_" class="ms-srch-hover-glass-siteViewer"></div>
+                            <iframe id="_#=idViewerEncoded=#_" src="_#= $urlHtmlEncodeString(ctx.CurrentItem.csr_Path) =#_" scrolling="no" frameborder="0px" class="ms-srch-hover-siteViewer">
+                            </iframe>                            
+                        </div>                      
+<!--#_                      
+                    }
+                    if(!loadSiteFrame && !Srch.U.n(ctx.CurrentItem.SiteLogo) && !Srch.U.isDefaultSiteLogo(ctx.CurrentItem.SiteLogo)){
+                        ctx.CurrentItem.csr_DataShown = true;
+_#-->					
+                        <div class="ms-srch-hover-imageContainer">
+                            <img id="_#= $htmlEncode(id + HP.ids.siteLogo) =#_" alt="_#= $htmlEncode(Srch.Res.hp_Alt_SiteLogo) =#_" src="_#= $urlHtmlEncodeString(ctx.CurrentItem.SiteLogo) =#_" onload="this.style.display='block';" />
+                        </div>
+<!--#_						
+                    }
+                    if (!Srch.U.w(ctx.CurrentItem.SiteDescription)) {
+                        ctx.CurrentItem.csr_DataShown = true;
+_#-->				
+                        <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">_#= $htmlEncode(Srch.Res.hp_SiteDescription) =#_</h3></div>
+                        <span class="ms-srch-hover-text" id="_#= $htmlEncode(id + HP.ids.siteDescription) =#_" title="_#= $htmlEncode(ctx.CurrentItem.SiteDescription) =#_">
+                            _#= $htmlEncode(Srch.U.truncateEnd(ctx.CurrentItem.SiteDescription, 150)) =#_
+                        </span>
+<!--#_						
+                    }
+_#-->
+                    <div class="ms-srch-hover-subTitle"><h3 class="ms-soften">Trending in this site</h3></div>
+                    <div class="ms-srch-hover-text" id="_#= $htmlEncode(id + 'trendingdocs') =#_">
+                        <img src="../_layouts/15/images/loadingcirclests16.gif" alt="Loading...">
+                    </div>
+<!--#_
+/*
+                    if(!Srch.U.w(ctx.CurrentItem.csr_Path)) {
+                        var siteResultsId = id + "_siteSearchResults";
+                        AddPostRenderCallback(ctx, function()
+                        {
+                            var query = "";
+                            var dataProvider = ctx.ClientControl.get_dataProvider();
+                            if (dataProvider) {
+                                var states = dataProvider.get_currentQueryState()
+                                if (states) {
+                                    query = states.k;
+                                }
+                            }
+
+                            var timeZoneId = dataProvider.get_timeZoneId();
+                            Srch.SiteSearchUtil.populateSiteSearchResults(ctx.CurrentItem.csr_Path, siteResultsId, query, id + HP.ids.noData, timeZoneId);
+                        });  
+_#-->			    
+                        <div id="_#= $htmlEncode(siteResultsId) =#_">
+                        </div>
+<!--#_						
+                    }
+*/
+_#-->
+                    _#= ctx.RenderBody(ctx) =#_ 
+                </div>			
+				<div id="_#= $htmlEncode(id + HP.ids.actions) =#_" class="ms-srch-hover-actions">                  
+					_#= ctx.RenderFooter(ctx) =#_
+				</div>
+			</div>
+<!--#_			
+			if(loadSiteFrame){
+				AddPostRenderCallback(ctx, function(){
+					HP.loadSiteViewer(ctx.CurrentItem.id, ctx.CurrentItem.id + HP.ids.inner, id + HP.ids.viewer, ctx.CurrentItem.csr_Path, "glass_" + id + HP.ids.viewer);
+				});
+			}
+
+function loadScript(url, callback) {
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+
+    if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+            if (script.readyState == "loaded" || script.readyState == "complete") {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else { //Others
+        script.onload = function () {
+            callback();
+        };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+if (!window.spevo_site_hoverpanel_cssregistered) {
+    var css = document.createElement('link');
+    css.setAttribute('rel', 'stylesheet');
+    css.setAttribute('href', '../Style%20Library/SPEvo_Item_Site_HoverPanel.css?r=2');
+    css.setAttribute('type', 'text/css');
+    document.head.appendChild(css);
+    window.spevo_site_hoverpanel_cssregistered = true;
+}
+
+function getValueFromResults(key, results) {
+    var value = '';
+
+    if (results != null &&
+        results.length > 0 &&
+        key != null) {
+        for (var i = 0; i < results.length; i++) {
+            var resultItem = results[i];
+
+            if (resultItem.Key === key) {
+                value = resultItem.Value;
+                break;
+            }
+        }
+    }
+
+    return value;
+}
+
+function getPreviewImageUrl(result) {
+    var uniqueID = getValueFromResults('uniqueID', result);
+    var siteId = getValueFromResults('siteID', result);
+    var webId = getValueFromResults('webID', result);
+    var docId = getValueFromResults('DocId', result);
+
+    log('Image URL for uniqueID: ' + uniqueID + ', siteId: ' + siteId + ', webId: ' + webId + ', docId: ' + docId, 'debug');
+
+    var imageUrl = '';
+
+    if (uniqueID !== null && siteId !== null && webId !== null && docId !== null) {
+        imageUrl = '../_layouts/15/getpreview.ashx?guidFile=' + uniqueID + '&guidSite=' + siteId + '&guidWeb=' + webId + '&docid=' + docId + '&metadatatoken=300x424x2&ClientType=SPEvo&size=small';
+    }
+    
+    log(imageUrl, 'debug');
+
+    return imageUrl;
+}
+
+function getUserPhotoUrl(userEmail) {
+    return "../_layouts/15/userphoto.aspx?size=S&accountname=" + userEmail;
+}
+
+function trim(s) {
+    if (s != null && s.length > 0) {
+        return s.replace(/^\s+|\s+$/gm, '');
+    }
+    else {
+        return s;
+    }
+}
+
+function getSiteMembers(site) {
+    return $.ajax({
+        url: site + "/_api/Web/AssociatedMemberGroup/Users?$select=Email",
+        method: 'GET',
+        headers: { 'Accept': 'application/json;odata=nometadata' }
+    });
+}
+
+function getActors(siteMembers, requestDigest) {
+    var deferred = $.Deferred();
+
+    var query = '';
+    siteMembers.value.forEach(function (member) {
+        if (query.length > 0 && member.Email != null && member.Email.length > 0) {
+            query += ' OR ';
+        }
+
+        query += 'UserName:' + member.Email;
+    });
+
+    var postData = JSON.stringify({
+        'request': {
+            '__metadata': { 'type': 'Microsoft.Office.Server.Search.REST.SearchRequest' },
+            'Querytext': query,
+            'SelectProperties': {
+                'results': ['DocId', 'WorkEmail']
+            },
+            'RowLimit': '100',
+            'StartRow': '0',
+            'SourceId': 'b09a7990-05ea-4af9-81ef-edfab16c4e31'
+        }
+    });
+
+    $.ajax({
+        url: '../_api/search/postquery',
+        method: 'POST',
+        data: postData,
+        headers: {
+            'Accept': 'application/json;odata=nometadata',
+            'Content-Type': 'application/json;odata=verbose',
+            'X-RequestDigest': requestDigest
+        }
+    }).success(function (data) {
+        if (data && data.PrimaryQueryResult && data.PrimaryQueryResult.RelevantResults) {
+            var actors = [];
+
+            data.PrimaryQueryResult.RelevantResults.Table.Rows.forEach(function (row) {
+                var actorId = getValueFromResults('DocId', row.Cells);
+                if (actorId != null && actorId.length > 0) {
+                    actors.push(actorId);
+                }
+            });
+
+            deferred.resolve(actors);
+        }
+    }).fail(function (err) {
+        deferred.reject(err);
+    });
+
+    return deferred.promise();
+}
+
+function getTrendingContent(siteUrl, actors, requestDigest) {
+    var deferred = $.Deferred();
+
+    var gq = '';
+    if (actors.length > 1) {
+        actors.forEach(function (actor) {
+            if (gq.length > 0) {
+                gq += ',';
+            }
+
+            gq += 'actor(' + actor + ',action:1020)';
+        });
+
+        gq += ',and(actor(me,action:1021),actor(me,or(action:1021,action:1036,action:1037,action:1039)))';
+
+        gq = 'or(' + gq + ')';
+    }
+    else {
+        gq = 'or(actor(' + actors[0] + ',action:1020),and(actor(me,action:1021),actor(me,or(action:1021,action:1036,action:1037,action:1039))))';
+    }
+
+    siteUrl = siteUrl.replace(':443/', '/');
+
+    var postData = JSON.stringify({
+        'request': {
+            '__metadata': { 'type': 'Microsoft.Office.Server.Search.REST.SearchRequest' },
+            'Querytext': 'path:' + siteUrl,
+            'SelectProperties': {
+                'results': ['Author', 'AuthorOwsUser', 'DocId', 'DocumentPreviewMetadata', 'Edges', 'EditorOwsUser', 'FileExtension', 'FileType', 'HitHighlightedProperties', 'HitHighlightedSummary', 'LastModifiedTime', 'LikeCountLifetime', 'ListID', 'ListItemID', 'OriginalPath', 'Path', 'Rank', 'SPWebUrl', 'SecondaryFileExtension', 'ServerRedirectedURL', 'SiteTitle', 'Title', 'ViewCountLifetime', 'siteID', 'uniqueID', 'webID']
+            },
+            'ClientType': 'MaventionTrendingInThisSite',
+            'BypassResultTypes': 'true',
+            'RowLimit': '2',
+            'StartRow': '0',
+            'RankingModelId': '0c77ded8-c3ef-466d-929d-905670ea1d72',
+            'Properties': {
+                'results': [
+                    {
+                        'Name': 'IncludeExternalContent',
+                        'Value':
+                        {
+                            'BoolVal': 'True',
+                            'QueryPropertyValueTypeIndex': 3
+                        }
+                    },
+                    {
+                        'Name': 'GraphQuery',
+                        'Value':
+                        {
+                            'StrVal': gq,
+                            'QueryPropertyValueTypeIndex': 1
+                        }
+                    },
+                    {
+                        'Name': 'GraphRankingModel',
+                        'Value':
+                        {
+                            'StrVal': '{"features":[{"function":"EdgeWeight"}],"featureCombination":"sum","actorCombination":"sum"}',
+                            'QueryPropertyValueTypeIndex': 1
+                        }
+                    }
+                ]
+            }
+        }
+    });
+
+    $.ajax({
+        url: '../_api/search/postquery',
+        method: 'POST',
+        data: postData,
+        headers: {
+            'Accept': 'application/json;odata=nometadata',
+            'Content-Type': 'application/json;odata=verbose',
+            'X-RequestDigest': requestDigest
+        }
+    }).success(function (data) {
+        var trendingContent = [];
+
+        if (data.PrimaryQueryResult && data.PrimaryQueryResult.RelevantResults && data.PrimaryQueryResult.RelevantResults.Table.Rows.length > 0) {
+            data.PrimaryQueryResult.RelevantResults.Table.Rows.forEach(function (row) {
+                var cells = row.Cells;
+
+                var editorInfo = getValueFromResults('EditorOwsUser', cells).split('|');
+                var modifiedDate = new Date(getValueFromResults('LastModifiedTime', cells).replace('.0000000', ''));
+                var dateString = (modifiedDate.getMonth()+1) + '/' + modifiedDate.getDate() + '/' + modifiedDate.getFullYear();
+
+                trendingContent.push({
+                    url: getValueFromResults('ServerRedirectedURL', cells),
+                    title: getValueFromResults('Title', cells),
+                    fileType: getValueFromResults('FileType', cells),
+                    previewImageUrl: getPreviewImageUrl(cells),
+                    lastModifiedTime: dateString,
+                    lastModifiedByName: trim(editorInfo[1]),
+                    lastModifiedByPhotoUrl: getUserPhotoUrl(trim(editorInfo[0]), siteUrl)
+                });
+            });
+        }
+
+        deferred.resolve(trendingContent);
+    }).fail(function (err) {
+        deferred.reject(err);
+    });
+
+    return deferred.promise();
+}
+
+function getRequestDigest() {
+    log('Entering getRequestDigest', 'debug');
+
+    var deferred = $.Deferred();
+
+    $.ajax({
+        url: '../_api/contextinfo',
+        method: 'POST',
+        headers: { 'Accept': 'application/json;odata=nometadata' }
+    }).success(function (data) {
+        log('Response from /_api/contextinfo: ' + data, 'debug');
+
+        if (data && data.FormDigestValue) {
+            deferred.resolve(data.FormDigestValue);
+        }
+        else {
+            deferred.reject('Error while getting Request Digest');
+        }
+    }).fail(function (err) {
+        deferred.reject(err);
+    });
+
+    return deferred.promise();
+}
+
+function renderTrendingContent(site, containerId) {
+    log('Entering renderTrendingContent. site: ' + site + ', containerId: ' + containerId, 'debug');
+
+    getRequestDigest().then(function (requestDigest) {
+        log('Entering getRequestDigest callback. requestDigest: ' + requestDigest, 'debug');
+
+        getSiteMembers(site).then(function (siteMembers) {
+            log('Entering getSiteMembers callback. siteMembers: ' + siteMembers, 'debug');
+
+            getActors(siteMembers, requestDigest).then(function (actors) {
+                log('Entering getActors callback. actors: ' + actors, 'debug');
+
+                getTrendingContent(site, actors, requestDigest).then(function (results) {
+                    log('Entering getTrendingContent callback. results: ' + results, 'debug');
+
+                    var documentsHtml = ['<ul class="documentsList">'];
+
+                    results.forEach(function(document) {
+                        documentsHtml.push('<li>');
+                        documentsHtml.push('<a href="' + document.url + '" target="_blank">');
+                        documentsHtml.push('<div class="thumbnail">');
+                        if (document.fileType.indexOf('xls') < 0) {
+                            documentsHtml.push('<img src="' + document.previewImageUrl + '" title="' +  document.title + ' preview" />');
+                        }
+                        documentsHtml.push('</div>');
+                        documentsHtml.push('<div class="docinfo">');
+                        documentsHtml.push('<img src="' + document.lastModifiedByPhotoUrl + '" alt="' + document.lastModifiedByName + '\'s photo" class="userphoto">');
+                        documentsHtml.push('<span class="username" title="' + document.lastModifiedByName +'">' + document.lastModifiedByName + '</span>');
+                        documentsHtml.push('<span class="modifiedDate">' + document.lastModifiedTime + '</span>');
+                        documentsHtml.push('</div>');
+                        documentsHtml.push('<div class="title">' + document.title + '</div>');
+                        documentsHtml.push('</a>');
+                        documentsHtml.push('</li>');
+                    });
+
+                    documentsHtml.push('</ul>');
+                    $('#' + containerId).html(documentsHtml.join(''));
+                }, function (err) {
+                    handleError(err);
+                });
+            }, function (err) {
+                handleError(err);
+            });
+        }, function (err) {
+            handleError(err);
+        });
+    }, function (err) {
+        handleError(err);
+    });
+}
+
+var logLevel = 'debug';
+function log(msg, level) {
+    if (level === logLevel) {
+        console.log(msg);
+    }
+    else if (level === 'error') {
+        console.error(msg);
+    }
+}
+
+function handleError(err) {
+    console.error(err);
+
+    if (window.spevo_site_hoverpanel_containerId) {
+        $('#' + window.spevo_site_hoverpanel_containerId).html(err);
+    }
+}
+
+AddPostRenderCallback(ctx, function() {
+    window.spevo_site_hoverpanel_containerId = id + 'trendingdocs';
+
+    log('Checking jQuery...', 'debug');
+
+    if (typeof(jQuery) === 'undefined') {
+        log('jQuery not found. Loading...', 'debug');
+
+        loadScript('https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function() {
+            log('jQuery loaded. Proceeding', 'debug');
+            renderTrendingContent(ctx.CurrentItem.csr_Path, id + 'trendingdocs');
+        });
+    }
+    else {
+        log('jQuery already loaded. Proceeding.', 'debug');
+        renderTrendingContent(ctx.CurrentItem.csr_Path, id + 'trendingdocs');
+    }
+});
+
+_#-->
+		</div>
+    </div>
+</body>
+</html>
